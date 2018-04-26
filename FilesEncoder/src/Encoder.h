@@ -170,7 +170,7 @@ public:
             if (!ofs.good())
                 throw runtime_error("Can't write to file: " + pathTo);
 
-            // Считываю мапу.
+            // Deserializing map.
             string s;
             char c;
             ifs.read(&c, 1);
@@ -213,9 +213,7 @@ public:
                 m[code] = co;
             }
 
-            //cout << "1" << endl;
-
-            // Декожу файл.
+            // Decode.
 
             string code = "";
             string buf = "";
@@ -239,8 +237,6 @@ public:
                     }
                 }
             }
-
-            //cout << k << endl;
 
             ifs.close();
             ofs.close();
@@ -399,11 +395,10 @@ public:
         {
             vector<char> encodedText;
 
-            // Весь текст тут.
             vector<char> text;
             FileReader::readAllBytes(path, text);
 
-            // Записываю мапу.
+            // Writing map.
             string ser = to_string(_map.size()) + "\n";
             for (auto& x : _map)
             {
@@ -419,7 +414,7 @@ public:
             if (!ofs.good())
                 throw runtime_error("Can't write to file: " + pathTo);
 
-            // Кодирую текст.
+            // Encoding.
             string buf = "";
             for (int i = 0; i < text.size(); ++i)
             {
@@ -454,7 +449,7 @@ public:
             if (!ofs.good())
                 throw runtime_error("Can't write to file: " + pathTo);
 
-            // Считываю мапу.
+            // Deserializing map.
             string s;
             char c;
             ifs.read(&c, 1);
@@ -497,9 +492,7 @@ public:
                 m[code] = co;
             }
 
-            //cout << "1" << endl;
-
-            // Декожу файл.
+            // Decode.
 
             string code = "";
             string buf = "";
@@ -523,8 +516,6 @@ public:
                     }
                 }
             }
-
-            //cout << k << endl;
 
             ifs.close();
             ofs.close();

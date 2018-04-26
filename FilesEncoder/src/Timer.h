@@ -36,15 +36,14 @@ public:
 
 private:
 
-    // Стартовая точка таймера.
+    // Start point.
     chrono::time_point<chrono::high_resolution_clock> m_start;
 
-    // Конечная точка таймера.
+    // Stop point.
     chrono::time_point<chrono::high_resolution_clock> m_stop;
 
-    // Флаг, показывающий запущен ли таймер.
     bool triggered = false;
 
-    // Время в наносекундах между стартовой и конечной точками таймера.
+    // The time in nanoseconds between the start and end points of the timer.
     enable_if<integral_constant<bool, true>::value, chrono::duration<long long, ratio<1, 1000000000>>>::type duration;
 };
