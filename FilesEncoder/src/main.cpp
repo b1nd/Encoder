@@ -1,12 +1,12 @@
 /*
- * Автор: Бузулуков Алексей Максимович
- * Дата: 26.03.2018
- * IDE: visual studio 2017
- * Структура проекта:
- * Encoder.h - кодирование / декодирование методами.
- * FileReader.h - запись / чтение с файлов. Подсчет размера, энтропии.
- * Timer.h - замер времени в наносекундах.
- * main.cpp - сам эксперимент.
+ * Author: Buzulukov Alexey
+ * Date: 26.03.2018
+ * IDE: Visual Studio 2017
+ * Project Structure.
+ * Encoder.h - encode / decode.
+ * FileReader.h - write / read files. Size, entropy.
+ * Timer.h - nanoseconds timer.
+ * main.cpp - experiment.
  */
 
 #include "Encoder.h"
@@ -37,7 +37,7 @@ int main()
 
     ofstream f(CSV_OUT, ios::out);
 
-    // Подготавливаю заголовки столбцов csv файла.
+    // Preparing csv file.
 
     f << "file name" << ";";
     f << "entropy" << ";";
@@ -50,47 +50,47 @@ int main()
 
     f << "\n";
 
-    // Для каждого файла.
+    // For each file.
     for (int i = 0; i < FILES_LEN; ++i)
     {
-        // Записываем имя файла.
+        // Write name.
         f << FILES_PATH[i] << ";";
 
-        // Записываем ентропию.
+        // Write entropy
         f << FileReader::entropy(SOURCE_FOLDER + FILES_PATH[i]) << ";";
 
-        // Для каждого метода.
+        // For each method.
         for (int m = 0; m < METHOD_COUNT; ++m)
         {
             std::cout << "File: " << FILES_PATH[i] << endl << "method: " << METHOD_NAMES[m] << endl;
 
             long long eTime = 0;
             long long deTime = 0;
-            // Повторяем n раз.
+
             for (int c = 0; c < n; ++c)
             {
-                // Кодируем.
+                // Code.
                 t.start();
                 e.encode(METHOD_NAMES[m], SOURCE_FOLDER + FILES_PATH[i], OUT_FOLDER + FILES_PATH[i] + "." + METHOD_NAMES[m]);
                 t.stop();
                 eTime += t.result();
 
-                // Декодируем.
+                // Decode.
                 t.start();
                 e.decode(METHOD_NAMES[m], OUT_FOLDER + FILES_PATH[i] + "." + METHOD_NAMES[m], OUT_FOLDER + FILES_PATH[i] + ".un" + METHOD_NAMES[m]);
                 t.stop();
                 deTime += t.result();
             }
 
-            // Записываем коэффициент сжатия.
+            // Write compress ratio.
             f << FileReader::compressRatio(SOURCE_FOLDER + FILES_PATH[i], OUT_FOLDER + FILES_PATH[i] + "." + METHOD_NAMES[m]) << ";";
 
             eTime /= n;
             deTime /= n;
             
-            // Записываем среднее время кодирования.
+            // Write average encode time.
             f << eTime << ";";
-            // Записываем среднее время декодирования.
+            // Write averege decode time.
             f << deTime << ";";
         }
 
